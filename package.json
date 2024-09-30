@@ -7,7 +7,7 @@
     "server": "nodemon backend/server.js"
   },
   "type": "module",
-  "keywords": [
+   "keywords": [
     "mern",
     "messaging",
     "real-time",

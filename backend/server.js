@@ -1,17 +1,32 @@
-import express from 'express'; 
+import express from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.route.js';
 import connectToMongoDB from './db/connectToMongoDb.js';
+import { errorHandler } from './utils/errorHandler.js'; 
 
-const app = express();
 dotenv.config();
-
+const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.get('/', (req, res) => res.send('Hello world!'));
+// Middleware to parse JSON requests
+app.use(express.json());
+
+// Routes
 app.use('/api/auth', authRoutes);
 
-app.listen(PORT, () => {
-  connectToMongoDB();
-  console.log(`Server is running on port ${PORT}`);
+// Base route
+app.get('/', (req, res) => res.send('Hello world!'));
+
+// Centralized error handling middleware - should be defined after routes
+app.use(errorHandler);
+
+// Start server and connect to MongoDB
+app.listen(PORT, async () => {
+    try {
+        await connectToMongoDB();
+        console.log(`Server is running on port ${PORT}`);
+    } catch (error) {
+        console.error('Failed to connect to MongoDB:', error);
+        process.exit(1); // Exit the process if MongoDB connection fails
+    }
 });
