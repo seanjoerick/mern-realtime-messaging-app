@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.route.js';
 import messageRoutes from './routes/message.route.js';
+import userRoutes from './routes/user.route.js';
 import connectToMongoDB from './db/connectToMongoDb.js';
 import { errorHandler } from './utils/errorHandler.js'; 
 
@@ -18,6 +19,7 @@ app.use(cookieParser());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/users', userRoutes);
 
 // Base route
 app.get('/', (req, res) => res.send('Hello world!'));
