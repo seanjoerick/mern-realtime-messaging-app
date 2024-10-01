@@ -1,8 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.route.js';
+import messageRoutes from './routes/message.route.js';
 import connectToMongoDB from './db/connectToMongoDb.js';
 import { errorHandler } from './utils/errorHandler.js'; 
+
 
 dotenv.config();
 const app = express();
@@ -13,6 +15,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/messages', messageRoutes);
 
 // Base route
 app.get('/', (req, res) => res.send('Hello world!'));
