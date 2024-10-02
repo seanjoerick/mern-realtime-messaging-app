@@ -19,9 +19,11 @@ export const addFriends = async (req, res, next) => {
     try {
         const loggedInUserId = req.user._id;
 
+        // Find the friend by ID
         const friend = await User.findById(friendId);
         if (!friend) return res.status(404).json({ message: 'User not found!' });
 
+        // Check if already friends
         if (friend.friends.includes(loggedInUserId)) {
             return res.status(400).json({ message: 'You are already friends with this user.' });
         }
@@ -31,12 +33,13 @@ export const addFriends = async (req, res, next) => {
             return res.status(400).json({ message: 'Friend request already sent' });
         }
 
-        // Check if the friend has a pending request from the logged-in user
+        // Check if the friend has already sent a request to the logged-in user
         const loggedInUser = await User.findById(loggedInUserId); 
         if (loggedInUser.pendingRequests.includes(friendId)) {
             return res.status(400).json({ message: 'You need to accept this friend request.' });
         }
 
+        // Add logged-in user to friend's pending requests
         friend.pendingRequests.push(loggedInUserId);
         await friend.save();
 
@@ -47,8 +50,9 @@ export const addFriends = async (req, res, next) => {
     }
 };
 
+
 export const acceptFriends = async (req, res, next) => {
-    const requesterId = req.params.requestedId; 
+    const requesterId = req.params.requesterId; 
 
     try {
         const loggedInUserId = req.user._id;
@@ -57,9 +61,9 @@ export const acceptFriends = async (req, res, next) => {
         const loggedInUser = await User.findById(loggedInUserId);
         const requester = await User.findById(requesterId);
 
-        // Check if both users exist
+        // Check if either user is not found
         if (!loggedInUser || !requester) {
-            return res.status(400).json({ message: 'User not found!' });
+            return res.status(400).json({ message: 'One or both users not found!' });
         }
 
         // Check if the friend request exists in the logged-in user's pendingRequests
@@ -77,10 +81,7 @@ export const acceptFriends = async (req, res, next) => {
         );
 
         // Save both users concurrently
-        await Promise.all([
-            loggedInUser.save(),
-            requester.save()
-        ]);
+        await Promise.all([loggedInUser.save(), requester.save()]);
         
         res.status(200).json({ message: 'Friend request accepted' });
     } catch (error) {

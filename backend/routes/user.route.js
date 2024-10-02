@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/allusers', verifyToken, getUsers);
 router.post('/friends/add/:userId', verifyToken, addFriends);
-router.post('/friends/accept/:requestedId', verifyToken, acceptFriends);
+router.post('/friends/accept/:requesterId', verifyToken, acceptFriends);
 router.get('/getfriends', verifyToken, getFriends);
 
 export default router;
