@@ -28,3 +28,24 @@ export const addFriends = async (req, res) => {
     }
 
 }
+
+export const getFriends = async (req, res, next) => {
+    try {
+        const loggedInUserId = req.user._id;
+        const loggedInUser = await User.findById(loggedInUserId)
+            .populate('friends', 'fullName profilePic')
+            .select('-password');
+
+        if (!loggedInUser) return res.status(404).json({ message: 'User not found!' });
+
+        if (loggedInUser.friends.length === 0) {
+            return res.status(200).json({ message: 'No friends yet' });
+        }
+
+        return res.status(200).json({ friends: loggedInUser.friends });
+        
+    } catch (error) {
+        console.log('Error getting friends: ', error.message);
+        next(error);
+    }
+};
