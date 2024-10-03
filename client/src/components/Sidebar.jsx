@@ -1,6 +1,7 @@
 import React from 'react';
 import Logout from './Logout';
-import Search from './Search'; 
+import Search from './Search';
+import Conversations from './Conversations';
 
 const Sidebar = () => {
   return (
@@ -36,21 +37,8 @@ const Sidebar = () => {
         <div className="text-xs text-gray-500">Lead UI/UX Designer</div>
       </div>
       <div className="flex flex-col mt-8 flex-grow">
-        {/* Use the reusable Search component */}
-        <Search placeholder="Search Friends..." />
-
-        <div className="flex flex-row items-center justify-between text-xs">
-          <span className="font-bold">Friends</span>
-          <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">4</span>
-        </div>
-        <div className="flex flex-col space-y-1 mt-4">
-          {['Henry Boyd', 'Marta Curtis', 'Philip Tucker', 'Christine Reid', 'Jerry Guzman'].map((name, index) => (
-            <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2" key={index}>
-              <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">{name.charAt(0)}</div>
-              <div className="ml-2 text-sm font-semibold">{name}</div>
-            </button>
-          ))}
-        </div>
+      <Search placeholder="Search..." />
+      <Conversations/>
       </div>
       <Logout />
     </div>
