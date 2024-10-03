@@ -1,10 +1,18 @@
-import Home from './pages/Home';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SignUp from './pages/SignUp';
+import Login from './pages/Login';
 
-export default function App() {
+const App = () => {
   return (
-    <div className="p-4">
-      <Home />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
+export default App;
