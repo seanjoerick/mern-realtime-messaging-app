@@ -3,7 +3,7 @@ import Logout from './Logout';
 import Search from './Search';
 import Conversations from './Conversations';
 
-const Sidebar = () => {
+const Sidebar = ({ onUserSelect }) => {
   return (
     <div className="flex flex-col h-full py-8 pl-2 pr-2 w-64 bg-blue-500 flex-shrink-0">
       <div className="flex flex-row items-center justify-center h-12 w-full">
@@ -38,7 +38,7 @@ const Sidebar = () => {
       </div>
       <div className="flex flex-col mt-8 flex-grow">
         <Search placeholder="Search..." />
-        <Conversations />
+        <Conversations onUserSelect={onUserSelect} />
       </div>
       <div className="mt-auto">
         <Logout />

@@ -1,59 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, Bell } from 'lucide-react';
+import useSignup from '../hooks/useSignup';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    username: '',
+    password: '',
+    gender: 'male',
+    terms: false,
+  });
+
+  const { loading, signup } = useSignup();
+  
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.terms) {
+      toast.error('You must accept the Terms and Conditions to sign up.');
+      return;
+    }
+    await signup(formData);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">
       <div className="card w-full max-w-md shadow-xl bg-base-100">
         <div className="card-body">
           <h3 className="text-3xl font-extrabold text-center">Registration</h3>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="space-y-4">
-
-              {/* Name Input with SVG */}
+              
+              {/* Full Name Input */}
               <div>
-                <label className="label">
-                  <span className="label-text">Name</span>
+                <label className="label" htmlFor="fullName">
+                  <span className="label-text">Full Name</span>
                 </label>
                 <label className="input input-bordered flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    className="h-4 w-4 opacity-70"
-                  >
-                    <path
-                      d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
-                    />
-                  </svg>
                   <input
                     type="text"
+                    id="fullName"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
                     className="grow"
-                    placeholder="Name"
+                    placeholder="Full Name"
                     required
                   />
                 </label>
               </div>
 
-              {/* Username Input with SVG */}
+              {/* Username Input */}
               <div>
-                <label className="label">
+                <label className="label" htmlFor="username">
                   <span className="label-text">Username</span>
                 </label>
                 <label className="input input-bordered flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    className="h-4 w-4 opacity-70"
-                  >
-                    <path
-                      d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
-                    />
-                  </svg>
                   <input
                     type="text"
+                    id="username"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
                     className="grow"
                     placeholder="Username"
                     required
@@ -61,26 +78,18 @@ const SignUp = () => {
                 </label>
               </div>
 
-              {/* Password Input with SVG */}
+              {/* Password Input */}
               <div>
-                <label className="label">
+                <label className="label" htmlFor="password">
                   <span className="label-text">Password</span>
                 </label>
                 <label className="input input-bordered flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    className="h-4 w-4 opacity-70"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
                   <input
                     type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
                     className="grow"
                     placeholder="Password"
                     required
@@ -97,16 +106,21 @@ const SignUp = () => {
                   <label className="label cursor-pointer">
                     <input
                       type="radio"
-                      name="radio-1"
+                      name="gender"
+                      value="male"
+                      checked={formData.gender === 'male'}
+                      onChange={handleChange}
                       className="radio radio-primary"
-                      defaultChecked
                     />
                     <span className="label-text ml-2">Male</span>
                   </label>
                   <label className="label cursor-pointer">
                     <input
                       type="radio"
-                      name="radio-1"
+                      name="gender"
+                      value="female"
+                      checked={formData.gender === 'female'}
+                      onChange={handleChange}
                       className="radio radio-primary"
                     />
                     <span className="label-text ml-2">Female</span>
@@ -114,10 +128,13 @@ const SignUp = () => {
                   <label className="label cursor-pointer">
                     <input
                       type="radio"
-                      name="radio-1"
+                      name="gender"
+                      value="other"
+                      checked={formData.gender === 'other'}
+                      onChange={handleChange}
                       className="radio radio-primary"
                     />
-                    <span className="label-text ml-2">Iphone Pro max</span>
+                    <span className="label-text ml-2">Other</span>
                   </label>
                 </div>
               </div>
@@ -125,12 +142,14 @@ const SignUp = () => {
               {/* Terms and Conditions */}
               <div className="flex items-center">
                 <input
-                  id="remember-me"
-                  name="remember-me"
+                  id="terms"
+                  name="terms"
                   type="checkbox"
+                  checked={formData.terms}
+                  onChange={handleChange}
                   className="checkbox"
                 />
-                <label htmlFor="remember-me" className="ml-3 label-text">
+                <label htmlFor="terms" className="ml-3 label-text">
                   I accept the{' '}
                   <Link to="#" className="link link-primary">Terms and Conditions</Link>
                 </label>
@@ -142,8 +161,9 @@ const SignUp = () => {
               <button
                 type="submit"
                 className="btn btn-primary w-full"
+                disabled={loading}
               >
-                Create an account
+                {loading ? 'Creating Account...' : 'Create an account'}
               </button>
             </div>
 
