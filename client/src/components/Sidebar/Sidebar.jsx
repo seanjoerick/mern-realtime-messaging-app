@@ -5,7 +5,7 @@ import Conversations from './Conversations';
 
 const Sidebar = () => {
   return (
-    <div className="flex flex-col py-8 pl-2 pr-2 w-64 bg-blue-500 flex-shrink-0">
+    <div className="flex flex-col h-full py-8 pl-2 pr-2 w-64 bg-blue-500 flex-shrink-0">
       <div className="flex flex-row items-center justify-center h-12 w-full">
         <div className="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10">
           <svg
@@ -37,10 +37,12 @@ const Sidebar = () => {
         <div className="text-xs text-gray-500">Lead UI/UX Designer</div>
       </div>
       <div className="flex flex-col mt-8 flex-grow">
-      <Search placeholder="Search..." />
-      <Conversations/>
+        <Search placeholder="Search..." />
+        <Conversations />
       </div>
-      <Logout />
+      <div className="mt-auto">
+        <Logout />
+      </div>
     </div>
   );
 };
