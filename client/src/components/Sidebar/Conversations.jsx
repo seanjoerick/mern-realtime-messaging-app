@@ -1,32 +1,38 @@
 import React from 'react';
 import Conversation from './Conversation';
+import useGetFriends from '../../hooks/useGetFriends';
 
 const Conversations = ({ onUserSelect }) => {
-  const conversationData = [
-    { id: 1, name: 'Henry Boyd', avatar: 'https://randomuser.me/api/portraits/men/32.jpg', online: true },
-    { id: 2, name: 'Marta Curtis', avatar: 'https://randomuser.me/api/portraits/women/44.jpg', online: false },
-    { id: 3, name: 'Philip Tucker', avatar: 'https://randomuser.me/api/portraits/men/45.jpg', online: true },
-    { id: 4, name: 'Christine Reid', avatar: 'https://randomuser.me/api/portraits/women/68.jpg', online: false },
-    { id: 5, name: 'Jerry Guzman', avatar: 'https://randomuser.me/api/portraits/men/12.jpg', online: true },
-  ];
+  const { loading, friends, friendsCount } = useGetFriends();
 
   return (
     <div className="flex flex-col mt-4">
       <div className="flex flex-row items-center justify-between text-xs">
-        <span className="font-bold">Conversations</span>
-        <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">{conversationData.length}</span>
+        <span className="font-bold">Friends</span>
+        <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">{friendsCount}</span>
       </div>
-      <div className="flex flex-col space-y-1 mt-4">
-        {conversationData.map((conversation) => (
-          <Conversation
-            key={conversation.id}
-            name={conversation.name}
-            avatar={conversation.avatar}
-            online={conversation.online}
-            onClick={() => onUserSelect(conversation)}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <div className="flex items-center justify-center mt-4">
+          <span className="loading loading-spinner loading-lg"></span>
+          <span className="ml-2 text-gray-500">Loading friends...</span>
+        </div>
+      ) : (
+        <div className="flex flex-col space-y-1 mt-4">
+          {friends.length === 0 ? (
+            <p className="text-gray-500">No friends yet.</p>
+          ) : (
+            friends.map((friend) => (
+              <Conversation
+                key={friend._id}
+                name={friend.fullName}
+                avatar={friend.profilePic}
+                online={true}
+                onClick={() => onUserSelect(friend)}
+              />
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 };
