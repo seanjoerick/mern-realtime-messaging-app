@@ -105,11 +105,15 @@ export const getFriends = async (req, res, next) => {
             return res.status(404).json({ message: 'User not found!' });
         }
 
-        if (loggedInUser.friends.length === 0) {
-            return res.status(200).json({ message: 'No friends yet' });
+        // Get the friends list and count
+        const friends = loggedInUser.friends;
+        const friendsCount = friends.length;
+
+        if (friendsCount === 0) {
+            return res.status(200).json({ message: 'No friends yet', count: friendsCount });
         }
 
-        return res.status(200).json({ friends: loggedInUser.friends });
+        return res.status(200).json({ friends, count: friendsCount });
     } catch (error) {
         console.error('Error getting friends: ', error.message);
         next(error);

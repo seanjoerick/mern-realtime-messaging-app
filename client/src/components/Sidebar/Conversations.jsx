@@ -8,18 +8,18 @@ const Conversations = ({ onUserSelect }) => {
   return (
     <div className="flex flex-col mt-4">
       <div className="flex flex-row items-center justify-between text-xs">
-        <span className="font-bold">Friends</span>
-        <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">{friendsCount}</span>
+        <span className="font-bold text-white">Friends</span>
+        <span className="flex items-center justify-center bg-gray-600 h-4 w-4 rounded-full text-white">{friendsCount}</span>
       </div>
       {loading ? (
         <div className="flex items-center justify-center mt-4">
           <span className="loading loading-spinner loading-lg"></span>
-          <span className="ml-2 text-gray-500">Loading friends...</span>
+          <span className="ml-2 text-gray-400">Loading friends...</span>
         </div>
       ) : (
-        <div className="flex flex-col space-y-1 mt-4">
+        <div className="flex flex-col space-y-1 mt-4 max-h-[400px] custom-scrollbar">
           {friends.length === 0 ? (
-            <p className="text-gray-500">No friends yet.</p>
+            <p className="text-gray-400">No friends yet.</p>
           ) : (
             friends.map((friend) => (
               <Conversation
@@ -38,3 +38,4 @@ const Conversations = ({ onUserSelect }) => {
 };
 
 export default Conversations;
+

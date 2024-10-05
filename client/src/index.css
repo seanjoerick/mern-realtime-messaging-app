@@ -1,4 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Custom Scrollbar Styles for Dark Mode */
+.custom-scrollbar {
+    scrollbar-width: thin; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer and Edge */
+}
 
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #555; /* Background of the scrollbar track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #121212; /* Background of the scrollbar thumb */
+    border-radius: 5px; /* Rounded edges for the scrollbar thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #242424; /* Background color on hover */
+}
+
+/* Hide scrollbar for all browsers */
+.custom-scrollbar::-webkit-scrollbar {
+    display: block; /* Show scrollbar in WebKit browsers */
+}
+
+.custom-scrollbar {
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Styles for Hiding the Scrollbar */
+.hidden-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer and Edge */
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in WebKit browsers */
+}
+
+.hidden-scrollbar {
+    overflow-y: auto; /* Enable vertical scrolling */
+}

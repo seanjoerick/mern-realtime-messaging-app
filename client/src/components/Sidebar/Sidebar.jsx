@@ -8,7 +8,7 @@ const Sidebar = ({ onUserSelect }) => {
   const { authUser } = useAuthContext();
 
   return (
-    <div className="flex flex-col h-full py-8 pl-2 pr-2 w-64 bg-blue-500 flex-shrink-0">
+    <div className="flex flex-col h-full py-8 pl-2 pr-2 w-80 md:w-96 lg:w-[400px] bg-blue-500 flex-shrink-0">
       <div className="flex flex-row items-center justify-center h-12 w-full">
         <div className="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10">
           <svg
@@ -41,6 +41,7 @@ const Sidebar = ({ onUserSelect }) => {
         <div className="text-xs text-gray-500">{authUser ? authUser.fullName : 'Fullname'}</div>
         <div className="text-xs text-gray-500">{authUser ? authUser.gender.charAt(0).toUpperCase() + authUser.gender.slice(1).toLowerCase() : 'Fullname'}</div>
       </div>
+
       <div className="flex flex-col mt-8 flex-grow">
         <Search placeholder="Search..." />
         <Conversations onUserSelect={onUserSelect} />

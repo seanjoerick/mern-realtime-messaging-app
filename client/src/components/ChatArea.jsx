@@ -30,7 +30,7 @@ const ChatArea = ({ selectedUser }) => {
   return (
     <div className="flex flex-col h-full bg-gray-100"> 
       {/* Messages area */}
-      <div className="flex-grow overflow-y-auto p-4">
+      <div className="flex-grow overflow-y-auto p-4 hidden-scrollbar">
         {/* Display messages if a user is selected */}
         {selectedUser ? (
           messages.map((message) => (
