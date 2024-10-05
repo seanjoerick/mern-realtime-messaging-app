@@ -8,11 +8,11 @@ const Sidebar = ({ onUserSelect }) => {
   const { authUser } = useAuthContext();
 
   return (
-    <div className="flex flex-col h-full py-8 pl-2 pr-2 w-80 md:w-96 lg:w-[400px] bg-blue-500 flex-shrink-0">
+    <div className="flex flex-col h-full py-6 pl-2 pr-2 w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[400px] bg-blue-500 flex-shrink-0">
       <div className="flex flex-row items-center justify-center h-12 w-full">
-        <div className="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10">
+        <div className="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10 md:h-12 md:w-12">
           <svg
-            className="w-6 h-6"
+            className="w-6 h-6 md:w-8 md:h-8"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -26,20 +26,19 @@ const Sidebar = ({ onUserSelect }) => {
             ></path>
           </svg>
         </div>
-        <div className="ml-2 font-bold text-2xl">QuickChat</div>
+        <div className="ml-2 font-bold text-xl md:text-2xl">QuickChat</div>
       </div>
-      <div className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
-        <div className="h-20 w-20 rounded-full border overflow-hidden">
+      <div className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-4 md:py-6 px-4 rounded-lg">
+        <div className="h-16 w-16 md:h-20 md:w-20 rounded-full border overflow-hidden">
           <img
             src={authUser ? authUser.profilePic : "https://avatars3.githubusercontent.com/u/2763884?s=128"}
             alt="Avatar"
             className="h-full w-full"
           />
         </div>
-        
-        <div className="text-sm font-semibold mt-2">{authUser ? authUser.username : 'User'}</div>
-        <div className="text-xs text-gray-500">{authUser ? authUser.fullName : 'Fullname'}</div>
-        <div className="text-xs text-gray-500">{authUser ? authUser.gender.charAt(0).toUpperCase() + authUser.gender.slice(1).toLowerCase() : 'Fullname'}</div>
+        <div className="text-sm md:text-base font-semibold mt-2">{authUser ? authUser.username : 'User'}</div>
+        <div className="text-xs md:text-sm text-gray-500">{authUser ? authUser.fullName : 'Fullname'}</div>
+        <div className="text-xs md:text-sm text-gray-500">{authUser ? authUser.gender.charAt(0).toUpperCase() + authUser.gender.slice(1).toLowerCase() : 'Fullname'}</div>
       </div>
 
       <div className="flex flex-col mt-8 flex-grow">

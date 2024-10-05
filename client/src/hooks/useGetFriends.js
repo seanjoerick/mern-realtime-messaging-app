@@ -13,7 +13,6 @@ const useGetFriends = () => {
                 const res = await fetch('/api/user/getfriends');
                 const data = await res.json();
 
-                // Handle if no friends
                 if (data.message === 'No friends yet') {
                     setFriends([]);
                     setFriendsCount(0);
