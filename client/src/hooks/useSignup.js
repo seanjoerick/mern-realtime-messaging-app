@@ -18,8 +18,8 @@ const useSignup = () => {
             const data = await res.json();
             setLoading(false);
 
-            if (data.error) throw new Error(data.error);
-            
+            if (!res.ok) throw new Error(data.error);
+
             //local starage
             localStorage.setItem('chat-user', JSON.stringify(data));
             //context
