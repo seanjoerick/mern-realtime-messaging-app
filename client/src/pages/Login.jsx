@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, Bell } from 'lucide-react';
 import useLogin from '../hooks/useLogin';
+
 const Login = () => {
     const [formData, setFormData] = useState({
         username: '',
         password: '',
     });
-    
+
     const { loading, login } = useLogin();
 
     const handleChange = (e) => {
@@ -84,15 +85,24 @@ const Login = () => {
                                 </label>
                             </div>
                         </div>
+
                         <div className="mt-5">
                             <button
                                 type="submit"
-                                className="btn btn-primary w-full"
+                                className="btn btn-primary w-full flex items-center justify-center"
                                 disabled={loading}
                             >
-                                {loading ? 'Logging in...' : 'Login'}
+                                {loading ? (
+                                    <>
+                                        <span className="loading loading-spinner"></span>
+                                        <span className="ml-2">Logging in...</span>
+                                    </>
+                                ) : (
+                                    'Login'
+                                )}
                             </button>
                         </div>
+
                         <p className="mt-3 text-center">
                             Don't have an account?{' '}
                             <Link to="/signup" className="link link-primary">

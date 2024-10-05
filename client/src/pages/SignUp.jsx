@@ -156,14 +156,20 @@ const SignUp = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
             <div className="mt-5">
               <button
                 type="submit"
-                className="btn btn-primary w-full"
+                className="btn btn-primary w-full flex items-center justify-center"
                 disabled={loading}
               >
-                {loading ? 'Creating Account...' : 'Create an account'}
+                {loading ? (
+                  <>
+                    <span className="loading loading-spinner"></span>
+                    <span className="ml-2">Creating Account...</span>
+                  </>
+                ) : (
+                  'Create an account'
+                )}
               </button>
             </div>
 
