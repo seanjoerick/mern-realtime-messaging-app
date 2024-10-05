@@ -100,11 +100,12 @@ export const getFriends = async (req, res, next) => {
 
         if (!loggedInUser) return res.status(404).json({ message: 'User not found!' });
 
+        // Check if the user has friends
         if (loggedInUser.friends.length === 0) {
             return res.status(200).json({ message: 'No friends yet' });
         }
 
-        return res.status(200).json({ friends: loggedInUser.friends });
+        return res.status(200).json(loggedInUser.friends);
     } catch (error) {
         console.error('Error getting friends: ', error.message);
         next(error);
