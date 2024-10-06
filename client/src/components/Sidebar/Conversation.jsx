@@ -3,7 +3,7 @@ import React from 'react';
 const Conversation = ({ name, avatar, online, onClick, isLoading }) => {
   return (
     <button
-      className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2 relative md:p-3"
+      className="flex flex-row items-center hover:bg-gray-800 rounded-xl p-2 relative md:p-3"
       onClick={onClick}
     >
       {/* Avatar or Spinner */}

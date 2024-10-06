@@ -33,7 +33,18 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200">
+    <div className="min-h-screen flex items-center justify-center moving-background relative overflow-hidden">
+      {/* Random "Chat" Words */}
+      <div className="chat-word chat-1">Chat</div>
+      <div className="chat-word chat-2">Chat</div>
+      <div className="chat-word chat-3">Chat</div>
+      <div className="chat-word chat-4">Chat</div>
+      <div className="chat-word chat-5">Chat</div>
+      <div className="chat-word chat-6">Chat</div>
+      <div className="chat-word chat-7">Chat</div>
+      <div className="chat-word chat-8">Chat</div>
+      <div className="chat-word chat-9">Chat</div>
+
       <div className="card w-full max-w-md shadow-xl bg-base-100">
         <div className="card-body">
           <h3 className="text-3xl font-extrabold text-center">Registration</h3>

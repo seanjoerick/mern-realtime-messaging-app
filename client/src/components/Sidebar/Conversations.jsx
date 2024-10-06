@@ -24,7 +24,7 @@ const Conversations = ({ onUserSelect }) => {
       ) : (
         <div className="flex flex-col space-y-1 mt-4 md:mt-6 max-h-[300px] md:max-h-[400px] lg:max-h-[500px] custom-scrollbar">
           {friends.length === 0 ? (
-            <p className="text-gray-400 text-sm md:text-base">No friends yet.</p>
+            <p className="text-white text-sm md:text-base">No friends yet.</p>
           ) : (
             friends.map((friend) => (
               <Conversation

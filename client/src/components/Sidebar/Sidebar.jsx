@@ -10,9 +10,9 @@ const Sidebar = ({ onUserSelect, isSidebarOpen, toggleSidebar }) => {
 
   return (
     <div
-      className={`fixed z-40 inset-y-0 left-0 w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[400px] bg-gray-900 text-white transform ${
+      className={`fixed z-40 inset-y-0 left-0 w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[400px] text-white transform ${
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      } transition-transform duration-300 ease-in-out sm:relative sm:translate-x-0 sm:flex-shrink-0`}
+      } transition-transform duration-300 ease-in-out sm:relative sm:translate-x-0 sm:flex-shrink-0 moving-background`}
     >
       <div className="flex flex-col h-full py-6 px-4">
         {/* Close button for mobile */}

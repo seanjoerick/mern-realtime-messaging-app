@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 /* Custom Scrollbar Styles for Dark Mode */
 .custom-scrollbar {
     scrollbar-width: thin; /* Firefox */
@@ -47,6 +48,8 @@
     overflow-y: auto; /* Enable vertical scrolling */
 }
 
+
+
 /* Media Queries for 1387px Width */
 @media (max-width: 1387px) {
     .flex-shrink-0 {
@@ -62,4 +65,61 @@
       overflow-y: auto;
     }
   }
+  
+
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .moving-background {
+    background: linear-gradient(270deg, #6a11cb, #2575fc);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .chat-word {
+    position: absolute;
+    font-size: 3rem; /* Base font size */
+    color: rgba(255, 255, 255, 0.7);
+    animation: float 3s ease-in-out infinite;
+    white-space: nowrap; /* Prevent line breaks */
+  }
+  
+  /* Random positions and rotations for "Chat" */
+  .chat-1 { top: 10%; left: 5%; transform: rotate(10deg); animation-delay: 0s; }
+  .chat-2 { top: 20%; left: 15%; transform: rotate(-10deg); animation-delay: 0.5s; }
+  .chat-3 { top: 30%; left: 25%; transform: rotate(15deg); animation-delay: 1s; }
+  .chat-4 { top: 40%; left: 35%; transform: rotate(-15deg); animation-delay: 1.5s; }
+  .chat-5 { top: 50%; left: 50%; transform: rotate(5deg); animation-delay: 2s; }
+  .chat-6 { top: 60%; left: 65%; transform: rotate(-5deg); animation-delay: 2.5s; }
+  .chat-7 { top: 70%; left: 75%; transform: rotate(20deg); animation-delay: 3s; }
+  .chat-8 { top: 80%; left: 85%; transform: rotate(-20deg); animation-delay: 3.5s; }
+  .chat-9 { top: 90%; left: 90%; transform: rotate(30deg); animation-delay: 4s; }
   

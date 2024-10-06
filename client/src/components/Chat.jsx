@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar/Sidebar';
 import ChatArea from './ChatArea';
-import Usersearch from './Usersearch';
-import { Bell, UserPlus, Menu } from 'lucide-react';
+import AddFriends from './AddFriends';
+import Notifications from './Notifications';
+import { Bell, UserPlus as UserPlusIcon, Menu } from 'lucide-react';
 
 const Chat = () => {
   const [selectedUser, setSelectedUser] = useState(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isAddFriendsOpen, setIsAddFriendsOpen] = useState(false); 
+  const [isNotifOpen, setIsNotifOpen] = useState(false);
 
   const handleUserSelect = (user) => {
     setSelectedUser(user);
@@ -39,14 +42,19 @@ const Chat = () => {
               <Menu className="w-6 h-6" />
             </button>
 
-            <Usersearch />
-            <div className="flex items-center space-x-4">
-              <button className="p-2 rounded-lg hover:bg-gray-200 transition duration-200">
+            {/* Right Aligned Icons */}
+            <div className="flex items-center space-x-4 ml-auto"> 
+              <button className="p-2 rounded-lg hover:bg-gray-200 transition duration-200" 
+                onClick={() => setIsNotifOpen(true)}>
                 <Bell className="w-6 h-6" />
               </button>
-              <button className="p-2 rounded-lg hover:bg-gray-200 transition duration-200">
-                <UserPlus className="w-6 h-6" />
+
+              <button
+                className="p-2 rounded-lg hover:bg-gray-200 transition duration-200"
+                onClick={() => setIsAddFriendsOpen(true)}>
+                <UserPlusIcon className="w-6 h-6" />
               </button>
+
             </div>
           </div>
 
@@ -54,6 +62,13 @@ const Chat = () => {
           <div className="flex-grow overflow-y-auto">
             <ChatArea selectedUser={selectedUser} />
           </div>
+
+          {/* UserPlus Modal */}
+          <AddFriends isOpen={isAddFriendsOpen} onClose={() => setIsAddFriendsOpen(false)} />
+
+          {/* Notification Modal */}
+          <Notifications isOpen={isNotifOpen} onClose={() => setIsNotifOpen(false)} /> 
+
         </div>
       </div>
     </div>
