@@ -4,8 +4,6 @@ import MessageInput from './MessageInput';
 const ChatArea = ({ selectedUser }) => {
   const [messages, setMessages] = useState([
     { id: 1, text: "Hello!" },
-    { id: 2, text: "Hi there! How can I help you today?" },
-    { id: 3, text: "I have a question about React." },
     { id: 4, text: "Sure, I'd be happy to help with any React questions. What would you like to know?" },
   ]);
 

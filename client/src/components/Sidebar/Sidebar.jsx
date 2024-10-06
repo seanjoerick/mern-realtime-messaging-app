@@ -3,50 +3,76 @@ import Logout from './Logout';
 import Search from './Search';
 import Conversations from './Conversations';
 import { useAuthContext } from '../../context/AuthContext';
+import { X } from 'lucide-react';
 
-const Sidebar = ({ onUserSelect }) => {
+const Sidebar = ({ onUserSelect, isSidebarOpen, toggleSidebar }) => {
   const { authUser } = useAuthContext();
 
   return (
-    <div className="flex flex-col h-full py-6 pl-2 pr-2 w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[400px] bg-blue-500 flex-shrink-0">
-      <div className="flex flex-row items-center justify-center h-12 w-full">
-        <div className="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10 md:h-12 md:w-12">
-          <svg
-            className="w-6 h-6 md:w-8 md:h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+    <div
+      className={`fixed z-40 inset-y-0 left-0 w-64 sm:w-72 md:w-80 lg:w-96 xl:w-[400px] bg-gray-900 text-white transform ${
+        isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      } transition-transform duration-300 ease-in-out sm:relative sm:translate-x-0 sm:flex-shrink-0`}
+    >
+      <div className="flex flex-col h-full py-6 px-4">
+        {/* Close button for mobile */}
+        <div className="flex sm:hidden justify-end mb-4">
+          <button
+            className="text-white p-2 rounded-md hover:bg-gray-700 transition duration-200"
+            onClick={toggleSidebar}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-            ></path>
-          </svg>
+            <X className="w-6 h-6" />
+          </button>
         </div>
-        <div className="ml-2 font-bold text-xl md:text-2xl">QuickChat</div>
-      </div>
-      <div className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-4 md:py-6 px-4 rounded-lg">
-        <div className="h-16 w-16 md:h-20 md:w-20 rounded-full border overflow-hidden">
-          <img
-            src={authUser ? authUser.profilePic : "https://avatars3.githubusercontent.com/u/2763884?s=128"}
-            alt="Avatar"
-            className="h-full w-full"
-          />
-        </div>
-        <div className="text-sm md:text-base font-semibold mt-2">{authUser ? authUser.username : 'User'}</div>
-        <div className="text-xs md:text-sm text-gray-500">{authUser ? authUser.fullName : 'Fullname'}</div>
-        <div className="text-xs md:text-sm text-gray-500">{authUser ? authUser.gender.charAt(0).toUpperCase() + authUser.gender.slice(1).toLowerCase() : 'Fullname'}</div>
-      </div>
 
-      <div className="flex flex-col mt-8 flex-grow">
-        <Search placeholder="Search..." />
-        <Conversations onUserSelect={onUserSelect} />
-      </div>
-      <div className="mt-auto">
-        <Logout />
+        {/* Redesigned App Logo */}
+        <div className="flex flex-row items-center justify-center h-12 w-full">
+          <div className="flex items-center justify-center rounded-2xl text-blue-400 bg-gray-700 h-10 w-10 md:h-12 md:w-12">
+            {/* Simple chat bubble icon */}
+            <svg
+              className="w-6 h-6 md:w-8 md:h-8"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M19 10c0-3.866-3.582-7-8-7S3 6.134 3 10c0 3.866 3.582 7 8 7h4l4 4v-4c1.104 0 2-.896 2-2V10z" />
+            </svg>
+          </div>
+          <div className="ml-2 font-bold text-xl md:text-2xl text-white">
+            QuickChat
+          </div>
+        </div>
+
+        {/* User Profile Section */}
+        <div className="flex flex-col items-center bg-gray-800 border border-gray-700 mt-6 w-full py-6 px-4 rounded-lg">
+          <div className="h-20 w-20 rounded-full border border-gray-600 overflow-hidden">
+            <img
+              src={authUser ? authUser.profilePic : 'https://avatars3.githubusercontent.com/u/2763884?s=128'}
+              alt="Avatar"
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="text-base font-semibold mt-4 text-gray-100">
+            {authUser ? authUser.username : 'User'}
+          </div>
+          <div className="text-sm text-gray-400">
+            {authUser ? authUser.fullName : 'Fullname'}
+          </div>
+          <div className="text-sm text-gray-400">
+            {authUser ? authUser.gender.charAt(0).toUpperCase() + authUser.gender.slice(1).toLowerCase() : 'Gender'}
+          </div>
+        </div>
+
+        {/* Search and Conversations Section */}
+        <div className="flex flex-col mt-8 flex-grow space-y-6">
+          <Search placeholder="Search..." />
+          <Conversations onUserSelect={onUserSelect} />
+        </div>
+
+        {/* Logout Button */}
+        <div className="mt-auto">
+          <Logout />
+        </div>
       </div>
     </div>
   );

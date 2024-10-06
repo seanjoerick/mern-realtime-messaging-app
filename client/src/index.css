@@ -46,3 +46,20 @@
 .hidden-scrollbar {
     overflow-y: auto; /* Enable vertical scrolling */
 }
+
+/* Media Queries for 1387px Width */
+@media (max-width: 1387px) {
+    .flex-shrink-0 {
+      flex: 0 0 200px; /* Adjust sidebar width */
+    }
+    
+    .chat-area {
+      margin-left: 200px; /* Adjust margin for the chat area */
+    }
+    
+    /* Ensure chat area scrolls if necessary */
+    .flex-grow {
+      overflow-y: auto;
+    }
+  }
+  
