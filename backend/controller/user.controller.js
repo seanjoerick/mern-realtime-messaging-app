@@ -122,20 +122,6 @@ export const getFriends = async (req, res, next) => {
     }
 };
 
-// export const getPendingRequest = async (req, res, next) => {
-//     try {
-//         const loggedInUserId = req.user._id;
-//         const loggedInUser = await User.findById(loggedInUserId).select('pendingRequests');
-
-//         const pendingrequest = loggedInUser;
-        
-//         res.status(200).json({ pendingrequest})
-//     } catch (error) {
-//         console.error('Error getting pending request: '. error.message);
-//         next(error);
-//     }
-// }
-
 export const getPendingRequest = async (req, res, next) => {
     try {
         const loggedInUserId = req.user._id;
@@ -153,7 +139,8 @@ export const getPendingRequest = async (req, res, next) => {
             _id: { $in: loggedInUser.pendingRequests }
         }).select('fullName profilePic');
 
-        res.status(200).json({ pendingRequests: pendingRequestsDetails });
+        // Return the array directly
+        res.status(200).json(pendingRequestsDetails);
     } catch (error) {
         console.error('Error getting pending request: ', error.message);
         next(error);

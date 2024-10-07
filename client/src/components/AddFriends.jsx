@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
-import { Search } from 'lucide-react';
+import React, { useId, useState } from 'react';
+import { Search } from 'lucide-react'; 
 import useGetAllUsers from '../hooks/useGetAllUsers';
 import { useAuthContext } from '../context/AuthContext';
+import AddButton from './AddButton';
+import useAddFriends from '../hooks/useAddFriends';
 
 const AddFriends = ({ isOpen, onClose }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const { loading, users } = useGetAllUsers();
   const { authUser } = useAuthContext();
+  const  { addFriends } = useAddFriends();
 
   const filteredUsers = users.filter(user =>
     user.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleAddFriend = async (userId) => {
+    await addFriends(userId);
+  };
 
   if (!isOpen) return null;
 
@@ -35,33 +42,21 @@ const AddFriends = ({ isOpen, onClose }) => {
             <p>Loading...</p>
           ) : searchTerm && filteredUsers.length > 0 ? (
             <ul className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
-              {filteredUsers.slice(0, 5).map((user) => {
-                const hasPendingRequest = user.pendingRequests?.includes(authUser._id);
-
-                return (
-                  <li key={user._id} className="flex items-center p-2 border rounded-lg">
-                    <span className="mr-2">
-                      <img
-                        src={user.profilePic}
-                        alt={user.fullName}
-                        className="h-8 w-8 rounded-full object-cover"
-                      />
-                    </span>
-                    <div className="flex-grow">
-                      <p className="font-medium">{user.fullName}</p>
-                    </div>
-                    <div className="flex-shrink-0">
-                      <button
-                        className={`ml-2 w-32 h-10 flex items-center justify-center overflow-hidden text-ellipsis whitespace-nowrap ${hasPendingRequest ? 'bg-gray-400 cursor-default' : 'bg-blue-500'} text-white rounded-lg`}
-                        onClick={() => !hasPendingRequest && console.log(`Adding ${user._id}`)}
-                        disabled={hasPendingRequest}
-                      >
-                        <span className="text-center">{hasPendingRequest ? 'Sent' : 'Add Friend'}</span>
-                      </button>
-                    </div>
-                  </li>
-                );
-              })}
+              {filteredUsers.slice(0, 5).map((user) => (
+                <li key={user._id} className="flex items-center p-2 border rounded-lg">
+                  <span className="mr-2">
+                    <img
+                      src={user.profilePic}
+                      alt={user.fullName}
+                      className="h-8 w-8 rounded-full object-cover"
+                    />
+                  </span>
+                  <div className="flex-grow">
+                    <p className="font-medium">{user.fullName}</p>
+                  </div>
+                  <AddButton user={user} authUser={authUser} onAdd={handleAddFriend} /> 
+                </li>
+              ))}
             </ul>
           ) : (
             searchTerm && <p className="text-gray-500">No results found</p>

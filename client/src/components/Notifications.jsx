@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { UserIcon } from 'lucide-react';
+import useGetPending from '../hooks/useGetPending';
 
 const Notifications = ({ isOpen, onClose }) => {
-  const [activeTab, setActiveTab] = useState('all');
+  const { loading, getPending } = useGetPending(); // Use the custom hook
+  const [activeTab, setActiveTab] = React.useState('all');
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -16,9 +18,7 @@ const Notifications = ({ isOpen, onClose }) => {
     { id: 3, type: 'message', content: 'Alice Johnson replied to your comment' },
   ];
 
-  const friendRequests = allNotifications.filter(
-    (notification) => notification.type === 'friend_request'
-  );
+  const friendRequests = getPending;
 
   const notificationsToShow =
     activeTab === 'all' ? allNotifications : friendRequests;
@@ -42,17 +42,31 @@ const Notifications = ({ isOpen, onClose }) => {
           </button>
         </div>
         <div className="mb-4">
-          {notificationsToShow.length > 0 ? (
+          {loading ? (
+            <p className="text-gray-500">Loading...</p>
+          ) : notificationsToShow.length > 0 ? (
             <ul className="space-y-2">
               {notificationsToShow.map((notification) => (
-                <li key={notification.id} className="flex items-center p-2 border rounded-lg">
-                  <span className="mr-2">
-                    <UserIcon className="h-5 w-5 text-gray-600" />
-                  </span>
-                  <div className="flex-grow">
-                    <p className="font-medium">{notification.content}</p>
-                  </div>
-                </li>
+                activeTab === 'friend_requests' ? (
+                  <li key={notification._id} className="flex items-center p-2 border rounded-lg">
+                    <img src={notification.profilePic} alt={notification.fullName} className="h-8 w-8 rounded-full mr-2" />
+                    <div className="flex-grow">
+                      <p className="font-medium">{notification.fullName} sent you a friend request</p>
+                    </div>
+                    <button className="ml-4 px-3 py-1 bg-blue-500 text-white rounded-lg">
+                      Accept
+                    </button>
+                  </li>
+                ) : (
+                  <li key={notification.id} className="flex items-center p-2 border rounded-lg">
+                    <span className="mr-2">
+                      <UserIcon className="h-5 w-5 text-gray-600" />
+                    </span>
+                    <div className="flex-grow">
+                      <p className="font-medium">{notification.content}</p>
+                    </div>
+                  </li>
+                )
               ))}
             </ul>
           ) : (
