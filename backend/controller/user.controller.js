@@ -4,8 +4,9 @@ export const getUsers = async (req, res, next) => {
     try {
         const loggedInUserId = req.user._id;
 
-        // Find all users except the logged-in user
-        const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
+        const filteredUsers = await User.find({
+            _id: { $ne: loggedInUserId, $nin: req.user.pendingRequests }
+        }).select("-password");
 
         res.status(200).json(filteredUsers);
     } catch (error) {
@@ -13,6 +14,7 @@ export const getUsers = async (req, res, next) => {
         next(error);
     }
 };
+
 
 export const addFriends = async (req, res, next) => {
     const friendId = req.params.userId; 
