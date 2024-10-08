@@ -2,7 +2,7 @@ import React from 'react';
 import Conversation from './Conversation';
 import useGetFriends from '../../hooks/useGetFriends';
 
-const Conversations = ({ onUserSelect }) => {
+const Conversations = () => {
   const { loading, friends, friendsCount } = useGetFriends();
 
   return (
@@ -32,7 +32,6 @@ const Conversations = ({ onUserSelect }) => {
                 name={friend.fullName}
                 avatar={friend.profilePic}
                 online={true}
-                onClick={() => onUserSelect(friend)}
               />
             ))
           )}

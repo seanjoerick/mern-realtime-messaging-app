@@ -3,45 +3,22 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import ChatArea from './ChatArea';
 import AddFriends from './AddFriends';
 import Notifications from './Notifications';
-import { Bell, UserPlus as UserPlusIcon, Menu } from 'lucide-react';
+import { Bell, UserPlus as UserPlusIcon } from 'lucide-react';
 
 const Chat = () => {
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAddFriendsOpen, setIsAddFriendsOpen] = useState(false); 
   const [isNotifOpen, setIsNotifOpen] = useState(false);
-
-  const handleUserSelect = (user) => {
-    setSelectedUser(user);
-    setIsSidebarOpen(false);
-  };
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
 
   return (
     <div className="flex h-screen antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
         {/* Sidebar */}
-        <Sidebar
-          onUserSelect={handleUserSelect}
-          isSidebarOpen={isSidebarOpen} 
-          toggleSidebar={toggleSidebar}
-        />
+        <Sidebar />
 
         {/* Main Chat Area */}
         <div className="flex flex-col flex-auto h-full overflow-hidden p-6">
           {/* Top Bar */}
           <div className="flex items-center justify-between mb-4">
-            {/* Menu Button for Mobile */}
-            <button
-              className="sm:hidden p-2 rounded-lg hover:bg-gray-200 transition duration-200"
-              onClick={toggleSidebar} 
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-
             {/* Right Aligned Icons */}
             <div className="flex items-center space-x-4 ml-auto"> 
               <button className="p-2 rounded-lg hover:bg-gray-200 transition duration-200" 
@@ -54,13 +31,12 @@ const Chat = () => {
                 onClick={() => setIsAddFriendsOpen(true)}>
                 <UserPlusIcon className="w-6 h-6" />
               </button>
-
             </div>
           </div>
 
           {/* Chat Area */}
           <div className="flex-grow overflow-y-auto">
-            <ChatArea selectedUser={selectedUser} />
+            <ChatArea />
           </div>
 
           {/* UserPlus Modal */}
@@ -68,7 +44,6 @@ const Chat = () => {
 
           {/* Notification Modal */}
           <Notifications isOpen={isNotifOpen} onClose={() => setIsNotifOpen(false)} /> 
-
         </div>
       </div>
     </div>

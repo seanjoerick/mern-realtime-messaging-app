@@ -1,4 +1,4 @@
-import React, { useId, useState } from 'react';
+import React, { useState } from 'react';
 import { Search } from 'lucide-react'; 
 import useGetAllUsers from '../hooks/useGetAllUsers';
 import { useAuthContext } from '../context/AuthContext';
@@ -17,7 +17,7 @@ const AddFriends = ({ isOpen, onClose }) => {
   );
 
   const handleAddFriend = async (userId) => {
-    await addFriends(userId);
+ 
   };
 
   if (!isOpen) return null;

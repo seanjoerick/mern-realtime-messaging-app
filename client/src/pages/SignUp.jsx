@@ -54,7 +54,7 @@ const SignUp = () => {
               {/* Full Name Input */}
               <div>
                 <label className="label" htmlFor="fullName">
-                  <span className="label-text">Full Name</span>
+                  <span className="label-text">Name</span>
                 </label>
                 <label className="input input-bordered flex items-center gap-2">
                   <input
@@ -64,7 +64,7 @@ const SignUp = () => {
                     value={formData.fullName}
                     onChange={handleChange}
                     className="grow"
-                    placeholder="Full Name"
+                    placeholder="Name"
                     required
                   />
                 </label>

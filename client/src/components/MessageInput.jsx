@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const MessageInput = ({ onSendMessage }) => {
-  const [message, setMessage] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (message.trim()) {
-      onSendMessage(message);
-      setMessage('');
-    }
-  };
-
+const MessageInput = () => {
   return (
-    <form onSubmit={handleSubmit} className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
+    <form className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
+      {/* File button */}
       <div>
-        <button type="button" className="flex items-center justify-center text-gray-400 hover:text-gray-600">
+        <button 
+          type="button" 
+          className="flex items-center justify-center text-gray-400 hover:text-gray-600"
+          aria-label="Attach file"
+        >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path
               strokeLinecap="round"
@@ -25,16 +21,22 @@ const MessageInput = ({ onSendMessage }) => {
           </svg>
         </button>
       </div>
+      
+      {/* Emoji button */}
       <div className="flex-grow ml-4">
         <div className="relative w-full">
           <input
             type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
             className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
             placeholder="Type your message..."
+            disabled
+            aria-label="Message input"
           />
-          <button type="button" className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600">
+          <button 
+            type="button" 
+            className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600"
+            aria-label="Insert emoji"
+          >
             <svg
               className="w-6 h-6"
               fill="none"
@@ -47,10 +49,14 @@ const MessageInput = ({ onSendMessage }) => {
           </button>
         </div>
       </div>
+      
+      {/* Send button */}
       <div className="ml-4">
         <button
-          type="submit"
+          type="button"
           className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+          disabled
+          aria-label="Send message"
         >
           <span>Send</span>
           <span className="ml-2">
