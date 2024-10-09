@@ -3,7 +3,7 @@ import MessageInput from '../components/MessageInput';
 import useConversation from '../../zustand/useConversation';
 import { useAuthContext } from '../context/AuthContext';
 import { Hand } from 'lucide-react';
-import Message from '../components/Message';
+import Messages from '../components/Messages';
 const ChatArea = () => {
   const { selectedFriend, setSelectedFriend } = useConversation();
   const { authUser } = useAuthContext();
@@ -46,7 +46,7 @@ const ChatArea = () => {
 
           {/* Messages Area */}
           <div className="flex-grow p-4 overflow-y-auto hidden-scrollbar bg-gray-100">
-           <Message/>
+           <Messages/>
           </div>
 
           {/* Message Input */}
