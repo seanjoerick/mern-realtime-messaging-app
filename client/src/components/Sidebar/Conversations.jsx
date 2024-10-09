@@ -4,6 +4,7 @@ import useGetFriends from '../../hooks/useGetFriends';
 
 const Conversations = () => {
   const { loading, friends, friendsCount } = useGetFriends();
+  console.log(friends);
 
   return (
     <div className="flex flex-col mt-4 md:mt-6">
@@ -26,12 +27,11 @@ const Conversations = () => {
           {friends.length === 0 ? (
             <p className="text-white text-sm md:text-base">No friends yet.</p>
           ) : (
-            friends.map((friend) => (
+            friends.map((friend, index) => (
               <Conversation
                 key={friend._id}
-                name={friend.fullName}
-                avatar={friend.profilePic}
-                online={true}
+                friend={friend}
+                lastindx={index === friends.length - 1}
               />
             ))
           )}

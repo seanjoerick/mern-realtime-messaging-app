@@ -36,7 +36,8 @@ const Chat = () => {
 
           {/* Chat Area */}
           <div className="flex-grow overflow-y-auto">
-            <ChatArea />
+            <ChatArea/>
+            
           </div>
 
           {/* UserPlus Modal */}
