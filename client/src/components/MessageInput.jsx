@@ -1,9 +1,19 @@
-import React from 'react';
-
+import { useState } from "react";
+import useSendMessage from "../hooks/useSendMessage";
 
 const MessageInput = () => {
+  const [message, setMessage] = useState('');
+  const { loading, sendMessage } = useSendMessage();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!message) return; 
+    await sendMessage(message); 
+    setMessage('');  
+  };
+
   return (
-    <form className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
+    <form className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4" onSubmit={handleSubmit}>
       {/* File button */}
       <div>
         <button 
@@ -28,8 +38,9 @@ const MessageInput = () => {
           <input
             type="text"
             className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             placeholder="Type your message..."
-            disabled
             aria-label="Message input"
           />
           <button 
@@ -53,12 +64,32 @@ const MessageInput = () => {
       {/* Send button */}
       <div className="ml-4">
         <button
-          type="button"
+          type="submit" 
           className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
-          disabled
+          disabled={loading || !message} 
           aria-label="Send message"
         >
-          <span>Send</span>
+          {loading ? (
+            <svg
+              className="w-5 h-5 animate-spin"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              style={{ marginRight: "8px" }}
+            >
+              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
+              <path
+                d="M22 12c0 5.5-4.5 10-10 10S2 17.5 2 12"
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="none"
+                className="opacity-75"
+              />
+            </svg>
+          ) : (
+            <span>Send</span>
+          )}
           <span className="ml-2">
             <svg
               className="w-4 h-4 transform rotate-45 -mt-px"

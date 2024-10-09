@@ -1,20 +1,36 @@
-import React from 'react';
-import MessageInput from './MessageInput';
+import { useEffect } from 'react';
+import MessageInput from '../components/MessageInput';
 import useConversation from '../../zustand/useConversation';
 import { useAuthContext } from '../context/AuthContext';
-
+import { Hand } from 'lucide-react';
+import Message from '../components/Message';
 const ChatArea = () => {
-  const { selectedFriend } = useConversation();
+  const { selectedFriend, setSelectedFriend } = useConversation();
   const { authUser } = useAuthContext();
 
+
+
+  useEffect(() => {
+    return () => setSelectedFriend(null);
+  }, [setSelectedFriend]);
+
   return (
-    <div className="flex flex-col h-full bg-gray-100">
-      {/* Header Section without background color */}
-      <header className="flex items-center justify-between p-4 border-b border-gray-300">
-        <div className="flex items-center space-x-3">
-          {/* Avatar and Name */}
-          {selectedFriend ? (
-            <>
+    <div className="md:min-w-[450px] flex flex-col h-full">
+      {/* If no selected friend, show the welcome message */}
+      {!selectedFriend ? (
+        <div className="flex-grow flex items-center justify-center p-4 overflow-y-auto">
+          <div className="text-center text-gray-600">
+            <p className="text-gray-500 flex items-center">
+              <Hand className="mr-2" /> Welcome, {authUser.fullName}!
+            </p>
+            <p className="text-gray-500">Select a chat to start messaging.</p>
+          </div>
+        </div>
+      ) : (
+        <>
+          {/* Header with profile picture and name */}
+          <div className="bg-gray-800 px-4 py-2 mb-2">
+            <div className="flex items-center space-x-3">
               <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden">
                 <img
                   src={selectedFriend.profilePic}
@@ -22,41 +38,23 @@ const ChatArea = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="text-gray-800 font-semibold text-lg">
+              <span className="label-text text-gray-300">
                 {selectedFriend.fullName}
-              </div>
-            </>
-          ) : (
-            <div className="text-gray-800 font-semibold text-lg">
-              Welcome, {authUser.fullName}!
+              </span>
             </div>
-          )}
-        </div>
-      </header>
+          </div>
 
-      {/* Messages area */}
-      {selectedFriend ? (
-        <div className="flex-grow p-4 overflow-y-auto hidden-scrollbar">
-          {/* Here you can add your chat bubble components */}
-          <div className="space-y-4">
-            
+          {/* Messages Area */}
+          <div className="flex-grow p-4 overflow-y-auto hidden-scrollbar bg-gray-100">
+           <Message/>
           </div>
-        </div>
-      ) : (
-        <div className="flex-grow flex items-center justify-center p-4 overflow-y-auto">
-          {/* Placeholder message when no conversation is selected */}
-          <div className="text-center text-gray-600">
-            <p className="text-gray-500">Select a chat to start messaging.</p>
+
+          {/* Message Input */}
+          <div className="border-t border-gray-300 bg-white">
+            <MessageInput />
           </div>
-        </div>
+        </>
       )}
-
-      {/* Message Input */}
-      {selectedFriend ? (
-        <div className="border-t border-gray-300 bg-white">
-          <MessageInput onSendMessage={() => {}} />
-        </div>
-      ) : null}
     </div>
   );
 };
